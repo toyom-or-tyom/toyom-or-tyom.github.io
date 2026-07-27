@@ -1,6 +1,5 @@
 var heroName = document.getElementById('heroName');
 var navLogo = document.getElementById('navLogo');
-var nav = document.getElementById('nav');
 var aboutSection = document.getElementById('about');
 var heroSection = document.getElementById('hero');
 
@@ -24,7 +23,7 @@ document.querySelectorAll('img[data-fallback]').forEach(function(img){
 
 // hero-logo-img는 object-fit:contain이라 실제로 그려지는 그림이 박스보다
 // 좁을 수 있다(가로 여백). 스케일/이동 계산은 박스가 아니라 이 "실제로
-// 그려지는 영역"을 기준으로 해야 목표 크기(예: nav 72px)에 정확히 맞는다.
+// 그려지는 영역"을 기준으로 해야 목표 크기(nav-logo-img의 실제 높이)에 정확히 맞는다.
 function containRect(box, natW, natH){
   var boxRatio = box.width / box.height;
   var imgRatio = natW / natH;
@@ -126,7 +125,6 @@ function updateMorph(){
   var ty = morph.dy * eased;
   var s = 1 + (morph.scaleRatio - 1) * eased;
   heroName.style.transform = 'translate(' + tx + 'px, ' + ty + 'px) scale(' + s + ')';
-  nav.classList.toggle('scrolled', window.scrollY > 10);
 }
 
 function init(){
