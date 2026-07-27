@@ -2,6 +2,7 @@ var heroName = document.getElementById('heroName');
 var navLogo = document.getElementById('navLogo');
 var nav = document.getElementById('nav');
 var aboutSection = document.getElementById('about');
+var heroSection = document.getElementById('hero');
 
 var morph = {startLeft:0, startTop:0, dx:0, dy:0, scaleRatio:1, travel:1, ready:false};
 
@@ -46,21 +47,41 @@ function containRect(box, natW, natH){
 // 큰 로고 → 상단 내비 로고 자리까지 이동/축소하는 FLIP 애니메이션 준비
 // (position:static 상태에서의 "원래 위치"를 다시 측정한 뒤 position:fixed로 전환)
 function measureMorph(){
-  if(!heroName || !navLogo) return;
+  if(!heroName || !navLogo || !heroSection) return;
 
   var scrollY = window.scrollY;
 
-  var startRect = heroName.getBoundingClientRect();
-  var targetRect = navLogo.getBoundingClientRect();
+  // heroName은 최초 측정 후 body로 옮겨져 position:fixed + transform이 걸린
+  // 상태로 남아있다. resize 등으로 measureMorph가 다시 호출될 때 heroName
+  // 자신의 getBoundingClientRect()를 읽으면 이미 축소/이동된 값을 "원래 위치"로
+  // 착각해 계산이 완전히 틀어진다. 절대 변형되지 않는 .hero 컨테이너를 기준으로
+  // "원래 있었어야 할 위치/크기"를 매번 새로 계산한다.
+  var heroRect = heroSection.getBoundingClientRect();
+  var heroStyle = getComputedStyle(heroSection);
+  var padLeft = parseFloat(heroStyle.paddingLeft) || 0;
+  var padRight = parseFloat(heroStyle.paddingRight) || 0;
+  var padBottom = parseFloat(heroStyle.paddingBottom) || 0;
+  var contentWidth = heroRect.width - padLeft - padRight;
 
   var logoImg = heroName.querySelector('img');
   var natW = logoImg ? logoImg.naturalWidth : 0;
   var natH = logoImg ? logoImg.naturalHeight : 0;
+  var ratio = (natW && natH) ? (natW / natH) : 1;
+  var maxHeightPx = window.innerHeight * 0.6; // CSS .hero-logo-img{max-height:60vh}와 동일 기준
+  var boxWidth = contentWidth;
+  var boxHeight = Math.min(contentWidth / ratio, maxHeightPx);
+  var boxLeft = heroRect.left + padLeft;
+  var boxTop = heroRect.bottom - padBottom - boxHeight; // align-items:flex-end로 바닥에 붙는 위치
+
+  var startRect = {left: boxLeft, top: boxTop, width: boxWidth, height: boxHeight};
+  var targetRect = navLogo.getBoundingClientRect();
+
   var paintedStart = (natW && natH) ? containRect(startRect, natW, natH) : startRect;
   var paintedTarget = (natW && natH) ? containRect(targetRect, natW, natH) : targetRect;
 
   morph.startLeft = startRect.left;
   morph.startTop = startRect.top + scrollY; // scrollY=0 기준 절대 좌표로 역산
+  morph.boxWidth = boxWidth;
   morph.scaleRatio = paintedStart.width > 0 ? (paintedTarget.width / paintedStart.width) : 1;
 
   // 박스의 좌상단(transform-origin)을 기준으로 스케일이 적용되므로,
@@ -83,6 +104,10 @@ function measureMorph(){
   heroName.style.position = 'fixed';
   heroName.style.left = morph.startLeft + 'px';
   heroName.style.top = morph.startTop + 'px';
+  // position:fixed로 전환되면 CSS의 width:100%가 .hero가 아니라 뷰포트
+  // 전체 폭 기준으로 계산되어 오른쪽으로 삐져나가며 중심이 쏠린다.
+  // 측정한 hero 콘텐츠 폭으로 고정해 항상 화면 중앙에 오도록 한다.
+  heroName.style.width = morph.boxWidth + 'px';
   heroName.style.transformOrigin = '0 0';
   morph.ready = true;
 

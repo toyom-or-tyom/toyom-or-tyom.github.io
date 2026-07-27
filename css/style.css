@@ -1,12 +1,11 @@
 :root{
   --bg-hero:#bbff31;
-  --bg-dark:#0a0a0a;
-  --bg-black:#000000;
-  --fg:#f5f2ec;
-  --fg-muted:rgba(245,242,236,0.62);
+  --bg-light:#efefef;
+  --fg:#111111;
+  --fg-muted:rgba(0,0,0,0.62);
   --fg-on-accent:#111;
   --fg-on-accent-muted:rgba(17,17,17,0.62);
-  --border:rgba(245,242,236,0.22);
+  --border:rgba(0,0,0,0.16);
   --border-on-accent:rgba(17,17,17,0.25);
   --nav-h:84px;
   --serif:'Fraunces', Georgia, 'Times New Roman', serif;
@@ -16,7 +15,7 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
-  background:var(--bg-dark);
+  background:var(--bg-light);
   color:var(--fg);
   font-family:var(--sans);
   overflow-x:hidden;
@@ -103,7 +102,7 @@ body::before{
   position:relative;
   z-index:2;
   min-height:100vh;
-  background:var(--bg-hero);
+  background:linear-gradient(to bottom, var(--bg-hero) 0%, var(--bg-hero) 85%, var(--bg-light) 100%);
   display:flex;
   align-items:flex-end;
   padding:0 clamp(16px,3vw,32px) clamp(24px,4vw,48px);
@@ -142,7 +141,7 @@ body::before{
 .about{
   position:relative;
   z-index:2;
-  background:var(--bg-black);
+  background:var(--bg-light);
   padding:clamp(80px,12vw,160px) clamp(20px,6vw,80px);
 }
 .about-row{
@@ -196,8 +195,8 @@ body::before{
   width:auto;
   max-width:140px;
   object-fit:contain;
-  filter:grayscale(1) brightness(1.6);
-  opacity:0.85;
+  filter:grayscale(1);
+  opacity:0.6;
 }
 
 /* placeholder box shown when an <img> fails to load */
@@ -207,8 +206,8 @@ body::before{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#232323;
-  color:rgba(245,242,236,0.4);
+  background:#e2e2e2;
+  color:rgba(0,0,0,0.35);
   font-size:12px;
   letter-spacing:0.08em;
   text-align:center;
@@ -223,7 +222,7 @@ body::before{
 .work{
   position:relative;
   z-index:2;
-  background:var(--bg-dark);
+  background:var(--bg-light);
   padding:clamp(80px,10vw,140px) clamp(20px,6vw,80px);
 }
 .work-block + .work-block{margin-top:clamp(64px,8vw,110px);}
@@ -242,7 +241,7 @@ body::before{
   position:relative;
   aspect-ratio:4/3;
   overflow:hidden;
-  background:#1a1a1a;
+  background:#e0e0e0;
 }
 .work-item img{
   width:100%;
@@ -256,7 +255,7 @@ body::before{
 .contact{
   position:relative;
   z-index:2;
-  background:var(--bg-black);
+  background:var(--bg-light);
   min-height:60vh;
   display:flex;
   align-items:center;
