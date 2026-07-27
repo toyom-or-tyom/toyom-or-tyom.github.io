@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"/Users/sohyun/Documents/포트폴리오 바이브코딩/images/work\" \"/Users/sohyun/Documents/포트폴리오 바이브코딩/images/clients\" \"/Users/sohyun/Documents/포트폴리오 바이브코딩/css\" \"/Users/sohyun/Documents/포트폴리오 바이브코딩/js\" *)",
+      "Bash(find / -iname \"chromium-cli*\" -maxdepth 6 2>/dev/null | head -20; echo ---; ls /private/tmp/claude-501/bundled-skills/2.1.220/ 2>/dev/null)",
+      "Read(//private/tmp/claude-501/bundled-skills/2.1.220/**)",
+      "Bash(node -e \"require.resolve\\('playwright'\\)\")",
+      "Bash(curl -s http://localhost:8123/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8123/css/style.css)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8123/js/script.js)",
+      "Bash(open \"http://localhost:8123\")",
+      "Bash(curl -s http://localhost:8123/js/script.js)",
+      "Bash(curl -s -o /dev/null -w \"html:%{http_code} \" http://localhost:8123/)",
+      "Bash(curl -s -o /dev/null -w \"css:%{http_code} \" http://localhost:8123/css/style.css)",
+      "Bash(curl -s -o /dev/null -w \"js:%{http_code}\\\\n\" http://localhost:8123/js/script.js)",
+      "Bash(node -e \"process.exit\\(0\\)\")",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -s -o /dev/null -w \"1-logo.png:%{http_code}\\\\n\" http://localhost:8123/1-logo.png)",
+      "Bash(node --check \"/Users/sohyun/Documents/포트폴리오 바이브코딩/js/script.js\")",
+      "Bash(curl -s http://localhost:8123/css/style.css)",
+      "Bash(curl -s -o /dev/null -w \"css:%{http_code}\\\\n\" http://localhost:8123/css/style.css)",
+      "Bash(cd \"/Users/sohyun/Documents/포트폴리오 바이브코딩\" && mv \"1-logo .png\" \"1-logo.png\" && ls -la)",
+      "Bash(chromium-cli --session portfolio)",
+      "Bash(python3 -c \"import playwright\")",
+      "Bash(node -e \"require\\('playwright'\\)\")",
+      "Bash(pip3 install *)",
+      "Bash(python3 -m playwright install chromium)"
+    ],
+    "additionalDirectories": [
+      "/Users/sohyun/Documents/포트폴리오 바이브코딩/images",
+      "/Users/sohyun/Documents/포트폴리오 바이브코딩"
+    ]
+  }
+}

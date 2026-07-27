@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ============================================
+     ✏️ 여기만 바꾸면 됩니다
+     1) <title> 안의 "YOUR NAME"
+     2) .nav-name 안의 "YOUR NAME" (상단 내비 3번째 칸 이름 텍스트)
+     3) 로고 이미지: 프로젝트 폴더 최상위에 "1-logo.png" 파일을 넣으세요.
+        #heroName(하단 큰 로고)과 #navLogo(스크롤 시 도착하는 자리, 항상 투명·크기 기준점)가
+        같은 파일을 자동으로 참조합니다. 파일이 없으면 회색 "LOGO" 박스로 표시됩니다.
+     4) .ig-icon 의 href="#" 를 인스타그램 URL로
+     5) about-content 의 자기소개 문장
+     6) images/clients, images/work 폴더에 실제 이미지 넣기
+        (파일명이 아래 data-fallback 라벨과 일치하지 않아도,
+         src 경로에 해당 파일만 넣으면 자동으로 이미지가 뜹니다)
+     ============================================ -->
+<title>YOUR NAME — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-col nav-logo" id="navLogo" aria-hidden="true">
+      <img class="nav-logo-img" src="1-logo.png" alt="" data-fallback="LOGO">
+    </div>
+
+    <nav class="nav-col nav-links">
+      <a href="#about">About</a>
+      <a href="#commercial">Commercial Works</a>
+      <a href="#personal">Personal Works</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav-col nav-name">YOUR NAME</div>
+
+    <div class="nav-col nav-social">
+      <a href="#" target="_blank" rel="noopener" class="ig-icon" aria-label="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <rect x="2" y="2" width="20" height="20" rx="5.5"/>
+          <circle cx="12" cy="12" r="4.2"/>
+          <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="hero">
+  <h1 class="hero-name" id="heroName">
+    <a href="#hero"><img class="hero-logo-img" src="1-logo.png" alt="Logo" data-fallback="LOGO"></a>
+  </h1>
+</section>
+
+<section class="about" id="about">
+  <div class="about-row">
+    <div class="about-label">WHO AM I</div>
+    <div class="about-content who-am-i">
+      <p>
+        안녕하세요, 브랜딩과 비주얼 스토리텔링을 다루는 디자이너입니다.
+        아이덴티티부터 에디토리얼, 패키지까지 다양한 매체를 넘나들며
+        브랜드가 가진 이야기를 시각적으로 설득력 있게 풀어내는 작업을 합니다.
+        협업을 통해 아이디어를 실제로 존재하는 결과물로 만드는 과정을 좋아합니다.
+      </p>
+    </div>
+  </div>
+
+  <div class="about-row">
+    <div class="about-label">WHAT I DO</div>
+    <div class="about-content pills">
+      <span class="pill">Branding &amp; Identity</span>
+      <span class="pill">Illustration</span>
+      <span class="pill">Editorial</span>
+      <span class="pill">Lettering</span>
+      <span class="pill">Font</span>
+      <span class="pill">Package</span>
+    </div>
+  </div>
+
+  <div class="clients-row">
+    <img class="client-logo" src="images/clients/client-1.png" alt="Client 01" data-fallback="CLIENT 01">
+    <img class="client-logo" src="images/clients/client-2.png" alt="Client 02" data-fallback="CLIENT 02">
+    <img class="client-logo" src="images/clients/client-3.png" alt="Client 03" data-fallback="CLIENT 03">
+    <img class="client-logo" src="images/clients/client-4.png" alt="Client 04" data-fallback="CLIENT 04">
+    <img class="client-logo" src="images/clients/client-5.png" alt="Client 05" data-fallback="CLIENT 05">
+    <img class="client-logo" src="images/clients/client-6.png" alt="Client 06" data-fallback="CLIENT 06">
+  </div>
+</section>
+
+<section class="work" id="work">
+
+  <div class="work-block" id="commercial">
+    <h2 class="work-title">Commercial Works</h2>
+    <div class="work-grid">
+      <figure class="work-item"><img src="images/work/commercial-1.jpg" alt="Commercial work 01" data-fallback="COMMERCIAL 01"></figure>
+      <figure class="work-item"><img src="images/work/commercial-2.jpg" alt="Commercial work 02" data-fallback="COMMERCIAL 02"></figure>
+      <figure class="work-item"><img src="images/work/commercial-3.jpg" alt="Commercial work 03" data-fallback="COMMERCIAL 03"></figure>
+      <figure class="work-item"><img src="images/work/commercial-4.jpg" alt="Commercial work 04" data-fallback="COMMERCIAL 04"></figure>
+      <figure class="work-item"><img src="images/work/commercial-5.jpg" alt="Commercial work 05" data-fallback="COMMERCIAL 05"></figure>
+      <figure class="work-item"><img src="images/work/commercial-6.jpg" alt="Commercial work 06" data-fallback="COMMERCIAL 06"></figure>
+    </div>
+  </div>
+
+  <div class="work-block" id="personal">
+    <h2 class="work-title">Personal Works</h2>
+    <div class="work-grid">
+      <figure class="work-item"><img src="images/work/personal-1.jpg" alt="Personal work 01" data-fallback="PERSONAL 01"></figure>
+      <figure class="work-item"><img src="images/work/personal-2.jpg" alt="Personal work 02" data-fallback="PERSONAL 02"></figure>
+      <figure class="work-item"><img src="images/work/personal-3.jpg" alt="Personal work 03" data-fallback="PERSONAL 03"></figure>
+    </div>
+  </div>
+
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-row">
+    <a class="contact-item" href="mailto:thgus4830@gmail.com">thgus4830@gmail.com</a>
+    <a class="contact-item" href="tel:010-5478-9632">010-5478-9632</a>
+    <span class="contact-item">based in Seoul</span>
+  </div>
+</section>
+
+<script src="js/script.js"></script>
+</body>
+</html>
