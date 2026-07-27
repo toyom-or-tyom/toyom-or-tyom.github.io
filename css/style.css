@@ -114,8 +114,11 @@ body::before{
   color:#111111;
   background:none;
   border:none;
+  border-radius:0;
   padding:0;
   cursor:pointer;
+  -webkit-appearance:none;
+  appearance:none;
   transition:opacity .2s ease, color .2s ease;
 }
 .menu-toggle:hover{opacity:0.6;}
