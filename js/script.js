@@ -167,7 +167,50 @@ window.addEventListener('scroll', function(){
 }, {passive:true});
 
 var resizeTimer;
+var lastInnerWidth = window.innerWidth;
 window.addEventListener('resize', function(){
+  // 모바일 브라우저는 스크롤 중 주소창이 접히고 펼쳐지면서 innerHeight만
+  // 바뀌어도 resize 이벤트를 쏜다. 그때마다 재측정하면 스크롤 도중 로고
+  // 위치가 다시 계산되며 어긋나 보이므로, 실제로 폭이 바뀐 경우(회전,
+  // 창 크기 변경)에만 재측정한다.
+  var newInnerWidth = window.innerWidth;
+  if(newInnerWidth === lastInnerWidth) return;
+  lastInnerWidth = newInnerWidth;
+
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(init, 150);
 });
+
+// ---------- 모바일 메뉴 (점 세개 아이콘 → 전체화면 오버레이) ----------
+var menuToggle = document.getElementById('menuToggle');
+var mobileMenu = document.getElementById('mobileMenu');
+
+function closeMobileMenu(){
+  if(!mobileMenu) return;
+  mobileMenu.classList.remove('open');
+  mobileMenu.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('menu-open');
+  if(menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+}
+
+function openMobileMenu(){
+  if(!mobileMenu) return;
+  mobileMenu.classList.add('open');
+  mobileMenu.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('menu-open');
+  if(menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
+}
+
+if(menuToggle && mobileMenu){
+  menuToggle.addEventListener('click', function(){
+    if(mobileMenu.classList.contains('open')){
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  });
+  // 링크 자체의 기본 동작(#about 등으로 스크롤)은 그대로 두고, 메뉴만 닫는다.
+  mobileMenu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeMobileMenu);
+  });
+}

@@ -108,6 +108,61 @@ body::before{
   transition:opacity .2s ease, transform .2s ease;
 }
 .ig-icon:hover{opacity:0.6; transform:translateY(-1px);}
+.menu-toggle{
+  display:none;
+  align-items:center;
+  color:#111111;
+  background:none;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  transition:opacity .2s ease, color .2s ease;
+}
+.menu-toggle:hover{opacity:0.6;}
+/* 모바일 메뉴가 열려있는 동안엔 nav가 투명해서 검정 오버레이가 그대로
+   비쳐 보이는데, 아이콘 색이 #111111(거의 검정)이라 그대로 두면 안 보인다.
+   열려 있을 때만 밝은 색으로 바꿔 계속 보이고 눌러서 닫을 수 있게 한다. */
+body.menu-open .ig-icon,
+body.menu-open .menu-toggle{
+  color:var(--bg-light);
+}
+
+/* ---------- MOBILE MENU ---------- */
+.mobile-menu{
+  position:fixed;
+  inset:0;
+  z-index:90; /* nav(100)보다 아래: nav의 토글/인스타 아이콘이 계속 보이고 눌려야 함 */
+  background:#111111;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding:0 clamp(20px,4vw,56px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .35s ease, visibility 0s linear .35s;
+}
+.mobile-menu.open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transition:opacity .35s ease;
+}
+.mobile-menu-links{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:clamp(14px,4vw,22px);
+}
+.mobile-menu-links a{
+  color:var(--bg-hero);
+  font-family:var(--font);
+  font-size:clamp(22px,7vw,32px);
+  font-weight:600;
+  text-align:right;
+  transition:opacity .2s ease;
+}
+.mobile-menu-links a:hover{opacity:0.6;}
 
 /* ---------- HERO ---------- */
 .hero{
@@ -123,6 +178,7 @@ body::before{
   width:100%;
   line-height:0;
   z-index:101; /* JS가 position:fixed로 전환한 뒤 nav(100) 위에 오도록 */
+  will-change:transform; /* 모바일 스크롤 중 fixed+transform 요소가 밀리지 않도록 별도 레이어로 유지 */
 }
 .hero-name a{display:block;}
 .hero-logo-img,
@@ -301,6 +357,7 @@ a.contact-item:hover{color:var(--fg);}
 }
 @media (max-width:560px){
   .nav-links{display:none;}
+  .menu-toggle{display:inline-flex;}
   .work-grid{grid-template-columns:1fr;}
   .clients-row{justify-content:center;}
 }
