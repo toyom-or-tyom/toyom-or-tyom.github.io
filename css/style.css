@@ -336,7 +336,11 @@ body.menu-open .menu-toggle{
   left:0;
   width:0;
   height:0;
-  z-index:60; /* hero(2)보다 위, nav(100)보다는 아래 */
+  /* position:fixed는 그 자체로 새 stacking context를 만들기 때문에,
+     자식(.cursor-follow-item)의 z-index는 이 래퍼 안에서만 비교된다.
+     로고(hero-name, z-index:101)보다 위로 보이려면 이 래퍼 자체의
+     z-index가 더 높아야 한다. */
+  z-index:110;
   pointer-events:none;
 }
 .cursor-follow-item{

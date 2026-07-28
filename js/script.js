@@ -236,7 +236,16 @@ if(heroSection && cursorFollow){
     'images/work/trail-thumbs/p-mun-1jpeg.jpg'
   ];
 
-  var SPAWN_DISTANCE = 80;   // 마지막으로 찍은 자리에서 이만큼 움직여야 다음 이미지를 찍는다
+  // 처음 방문(캐시 없음) 상태에서 마우스를 움직이면, 이미지가 아직
+  // 다운로드되기 전에 트레일 표시 시간이 끝나버려 아무것도 안 보이는
+  // 문제가 있었다. 페이지 로드 시점에 미리 받아둬서 실제로 트레일이
+  // 뜰 때는 이미 캐시되어 즉시 그려지도록 한다.
+  trailImages.forEach(function(src){
+    var preload = new Image();
+    preload.src = src;
+  });
+
+  var SPAWN_DISTANCE = 70;   // 마지막으로 찍은 자리에서 이만큼 움직여야 다음 이미지를 찍는다
   var MAX_VISIBLE = 10;      // 동시에 화면에 떠 있을 수 있는 최대 개수
   var VISIBLE_MS = 550;      // 찍힌 뒤 사라지기 시작하기까지의 시간
   var FADE_MS = 200;         // 사라지는 데 걸리는 시간
