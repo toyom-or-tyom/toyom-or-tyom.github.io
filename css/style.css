@@ -328,6 +328,29 @@ body.menu-open .menu-toggle{
 }
 .work-item:hover img{transform:scale(1.04);}
 
+/* hero 영역 마우스 커서 이미지 트레일: 움직인 자리마다 100px 이미지를
+   하나씩 찍고(pacofernandez.me 방식) 잠시 후 페이드아웃한다. */
+.cursor-follow{
+  position:fixed;
+  top:0;
+  left:0;
+  width:0;
+  height:0;
+  z-index:60; /* hero(2)보다 위, nav(100)보다는 아래 */
+  pointer-events:none;
+}
+.cursor-follow-item{
+  position:fixed;
+  width:100px;
+  height:100px;
+  transform:translate(-50%,-50%);
+  background-size:cover;
+  background-position:center;
+  background-color:#e0e0e0;
+  opacity:1;
+  transition:opacity .2s ease;
+}
+
 /* ---------- CONTACT ---------- */
 .contact{
   position:relative;

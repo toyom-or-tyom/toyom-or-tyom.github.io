@@ -214,3 +214,122 @@ if(menuToggle && mobileMenu){
     a.addEventListener('click', closeMobileMenu);
   });
 }
+
+// ---------- hero(첫번째 메인) 영역 마우스 커서 이미지 트레일 ----------
+// pacofernandez.me의 커서 트레일 방식(마우스가 일정 거리 이상 움직일 때마다
+// 그 자리에 이미지를 하나씩 "찍고" 잠시 후 사라지는 방식)을 그대로 따라했다.
+var cursorFollow = document.getElementById('cursorFollow');
+
+if(heroSection && cursorFollow){
+  // work 폴더에 실제로 넣어둔 사진 10장을 그대로 사용한다.
+  // (커서 트레일용 100px 미리보기는 sips로 미리 축소해둔 썸네일)
+  var trailImages = [
+    'images/work/trail-thumbs/c-babo-1.jpg',
+    'images/work/trail-thumbs/c-bookf.jpg',
+    'images/work/trail-thumbs/c-kuy-1.jpg',
+    'images/work/trail-thumbs/c-library-1.jpg',
+    'images/work/trail-thumbs/c-mokpo1.jpg',
+    'images/work/trail-thumbs/c-poster1.jpg',
+    'images/work/trail-thumbs/c-woman-1.jpg',
+    'images/work/trail-thumbs/p-carp_1.jpg',
+    'images/work/trail-thumbs/p-gwangin1.jpg',
+    'images/work/trail-thumbs/p-mun-1jpeg.jpg'
+  ];
+
+  var SPAWN_DISTANCE = 80;   // 마지막으로 찍은 자리에서 이만큼 움직여야 다음 이미지를 찍는다
+  var MAX_VISIBLE = 10;      // 동시에 화면에 떠 있을 수 있는 최대 개수
+  var VISIBLE_MS = 550;      // 찍힌 뒤 사라지기 시작하기까지의 시간
+  var FADE_MS = 200;         // 사라지는 데 걸리는 시간
+
+  var lastSpawnX = null, lastSpawnY = null;
+  var cycleIndex = 0;
+  var activeStamps = [];
+
+  function expireStamp(stamp){
+    if(stamp.expired) return;
+    stamp.expired = true;
+    clearTimeout(stamp.timer);
+    // activeStamps 배열에서는 즉시(동기적으로) 빼야 한다. 그렇지 않으면
+    // 개수 초과 시 아래 while 루프가 배열이 줄지 않아 무한 루프에 빠진다.
+    var idx = activeStamps.indexOf(stamp);
+    if(idx !== -1) activeStamps.splice(idx, 1);
+    stamp.el.style.opacity = '0';
+    setTimeout(function(){
+      if(stamp.el.parentNode) stamp.el.parentNode.removeChild(stamp.el);
+    }, FADE_MS);
+  }
+
+  function spawnStamp(x, y){
+    var el = document.createElement('div');
+    el.className = 'cursor-follow-item';
+    el.style.backgroundImage = 'url(' + trailImages[cycleIndex] + ')';
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    cursorFollow.appendChild(el);
+    cycleIndex = (cycleIndex + 1) % trailImages.length;
+
+    var stamp = {el: el, expired: false, timer: null};
+    stamp.timer = setTimeout(function(){ expireStamp(stamp); }, VISIBLE_MS);
+    activeStamps.push(stamp);
+
+    // 너무 많이 쌓이지 않도록, 넘치면 가장 오래된 것부터 바로 사라지게 한다.
+    while(activeStamps.length > MAX_VISIBLE){
+      expireStamp(activeStamps[0]);
+    }
+  }
+
+  function clearAllStamps(){
+    activeStamps.slice().forEach(function(stamp){
+      clearTimeout(stamp.timer);
+      if(stamp.el.parentNode) stamp.el.parentNode.removeChild(stamp.el);
+    });
+    activeStamps.length = 0;
+    lastSpawnX = lastSpawnY = null;
+  }
+
+  var lastMouseX = 0, lastMouseY = 0, insideHero = false;
+
+  function handleMouseAt(x, y){
+    var rect = heroSection.getBoundingClientRect();
+    var inside = x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+
+    if(!inside){
+      if(insideHero) clearAllStamps();
+      insideHero = false;
+      return;
+    }
+    insideHero = true;
+
+    if(lastSpawnX === null){
+      spawnStamp(x, y);
+      lastSpawnX = x;
+      lastSpawnY = y;
+      return;
+    }
+    var dx = x - lastSpawnX, dy = y - lastSpawnY;
+    if(Math.sqrt(dx * dx + dy * dy) >= SPAWN_DISTANCE){
+      spawnStamp(x, y);
+      lastSpawnX = x;
+      lastSpawnY = y;
+    }
+  }
+
+  window.addEventListener('mousemove', function(e){
+    lastMouseX = e.clientX;
+    lastMouseY = e.clientY;
+    handleMouseAt(lastMouseX, lastMouseY);
+  });
+
+  // 스크롤 휠만으로 hero 영역을 벗어나는 경우(마우스는 가만히 있어도)까지
+  // 대응하기 위해, 스크롤할 때도 마지막 마우스 위치 기준으로 안/밖을 다시 확인한다.
+  var followScrollTicking = false;
+  window.addEventListener('scroll', function(){
+    if(!followScrollTicking){
+      window.requestAnimationFrame(function(){
+        handleMouseAt(lastMouseX, lastMouseY);
+        followScrollTicking = false;
+      });
+      followScrollTicking = true;
+    }
+  }, {passive:true});
+}
